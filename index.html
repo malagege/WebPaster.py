@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="initial-scale=1, maximum-scale=1">
+	<title>pyWebPaster</title>
+	<script src="https://code.jquery.com/jquery-2.1.4.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$("#text").on('change',  function(event) {
+				event.preventDefault();
+				/* Act on the event */
+				$.ajax({
+					url: '/sentText',
+					method: 'post',
+					data: {text: $("#text").val()},
+				})
+				.done(function() {
+					console.log("success");
+				})
+				.fail(function() {
+					console.log("error");
+
+				})
+				.always(function() {
+					console.log("complete");
+				});
+				
+			});
+		});
+	</script>
+</head>
+<body>
+	<textarea  id="text" cols="30" rows="10"></textarea><hr>
+	<a href="/getText">Computer's Clipboard</a>
+</body>
+</html>
