@@ -1,4 +1,5 @@
 import webapp2
+import pyperclip
 
 class webPaster(webapp2.RequestHandler):
     def get(self):
@@ -7,21 +8,12 @@ class webPaster(webapp2.RequestHandler):
         self.response.write(html)
 
     def post(self):
-        import win32clipboard
-        print self.request.POST["text"]
-        win32clipboard.OpenClipboard()
-        win32clipboard.EmptyClipboard()
-        win32clipboard.SetClipboardText(self.request.POST["text"])
-        win32clipboard.CloseClipboard()
+        pyperclip.copy(self.request.POST["text"])
 
 
 class getClipboard(webapp2.RequestHandler):
     def get(self):
-        import win32clipboard
-        win32clipboard.OpenClipboard()
-        self.response.write(win32clipboard.GetClipboardData())
-        win32clipboard.CloseClipboard()
-
+        self.response.write(pyperclip.paste())
 
 
 app = webapp2.WSGIApplication([
